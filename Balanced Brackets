@@ -1,0 +1,50 @@
+#!/bin/python3
+
+import math
+import os
+import random
+import re
+import sys
+
+#
+# Complete the 'isBalanced' function below.
+#
+# The function is expected to return a STRING.
+# The function accepts STRING s as parameter.
+#
+
+def isBalanced(s):
+    # Write your code here
+    stack = []
+    #Use a dictionary (bracket_map) to map each closing bracket to its corresponding opening bracket.
+    bracket_map = {')': '(', ']': '[', '}': '{'}
+    
+    for char in s:
+        #If the character is an opening bracket ((, {, [), push it onto the stack.
+        if char in bracket_map.values():
+            stack.append(char)
+        #Check if the stack is empty or the top element of the stack does not match the corresponding opening bracket from the bracket_map.
+        elif char in bracket_map.keys():
+            if stack == [] or bracket_map[char] != stack.pop():
+                return "NO"
+        else:
+            return "NO"
+    
+    if stack == []:
+        return "YES"
+    else:
+        return "NO"
+
+if __name__ == '__main__':
+    fptr = open(os.environ['OUTPUT_PATH'], 'w')
+
+    t = int(input().strip())
+
+    for t_itr in range(t):
+        s = input()
+
+        result = isBalanced(s)
+
+        fptr.write(result + '\n')
+
+    fptr.close()
